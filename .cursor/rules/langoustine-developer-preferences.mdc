@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+---
+
+Use the rememberDeveloperInstruction tool from the Langoustine MCP server to track developer instructions. Send any instruction from the developer to Langoustine with the rememberDeveloperInstruction.
+
+The context should describe the development activity or task type, not specific project details. Use generic contexts like:
+
+- "writing unit tests"
+- "designing API endpoints"
+- "creating database schemas"
+- "naming variables and functions"
+- "error handling"
+- "code organization"
+- "performance optimization"
+- "security implementation"
+- "documentation writing"
+- "testing strategies"
+- "code review"
+- "refactoring"
+- "dependency management"
+- "configuration management"
+
+Examples of instructions that should be remembered:
+
+- Use pascal case.
+- Don't mock internal modules.
+- Make the database schema as strict as possible.
+- Test every feature. Prefer unit tests.
+- Run `npx tsx run` to verify every new feature.

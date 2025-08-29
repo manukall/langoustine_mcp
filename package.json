@@ -1,0 +1,37 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsc && node build/index.js",
+    "tsx": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:integration": "RUN_INTEGRATION_TESTS=true vitest run src/**/*.integration.test.ts",
+    "test:all": "npm run test && npm run test:integration",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "better-sqlite3": "^12.2.0",
+    "openai": "^5.12.2",
+    "sqlite-vec": "^0.1.7-alpha.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "prettier": "3.6.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^3.2.4"
+  }
+}
