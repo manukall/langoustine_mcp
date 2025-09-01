@@ -1,6 +1,6 @@
 {
   "name": "langoustine-mcp",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Langoustine MCP Server for developer instruction management",
   "type": "module",
   "bin": {
