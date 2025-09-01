@@ -131,6 +131,26 @@ export EMBEDDING_MAX_RETRIES=3
 ### Integration with Cursor
 
 To use Langoustine with Cursor, you'll need to configure it as an MCP server in your Cursor settings. The server communicates via stdio and provides the tools mentioned above to enhance your coding experience.
+Here is an example configuration:
+
+```json
+  "mcpServers": {
+    "langoustine": {
+      "command": "npx",
+      "args": [
+        "langoustine-mcp",
+        "--db",
+        "/path/to/your/project/.langoustine.db"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "your-api-key"
+      }
+    },
+    ...
+  }
+}
+```
+
 It also helps to create a Cursor rule that instructs the assistant to use the Langoustine MCP server.
 
 ### Help

@@ -10,7 +10,12 @@
   "files": [
     "build/**/*"
   ],
-  "keywords": ["mcp", "model-context-protocol", "ai", "developer-tools"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "developer-tools"
+  ],
   "author": "Manuel",
   "license": "MIT",
   "scripts": {
