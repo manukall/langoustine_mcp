@@ -24,7 +24,7 @@ Integration tests use a **separate test database** (`langoustine.integration-tes
 
 ## Prerequisites
 
-1. **OpenAI API Key**: You need a valid `OPENAI_API_KEY` environment variable
+1. **OpenAI API Key**: You need a valid `LANGOUSTINE_MCP_OPENAI_API_KEY` environment variable
 2. **API Credits**: Ensure you have sufficient credits in your OpenAI account
 3. **Rate Limits**: Be aware of OpenAI's rate limits
 
@@ -125,8 +125,8 @@ Integration tests use a **separate test database** to ensure:
 
 ### Common Issues
 
-1. **"OPENAI_API_KEY environment variable is required"**
-   - Set your API key: `export OPENAI_API_KEY=your_key_here`
+1. **"LANGOUSTINE_MCP_OPENAI_API_KEY environment variable is required"**
+   - Set your API key: `export LANGOUSTINE_MCP_OPENAI_API_KEY=your_key_here`
 
 2. **"Failed to generate embedding"**
    - Check your API key is valid
@@ -147,7 +147,7 @@ Integration tests use a **separate test database** to ensure:
 
 ```bash
 # Required
-export OPENAI_API_KEY=your_api_key_here
+export LANGOUSTINE_MCP_OPENAI_API_KEY=your_api_key_here
 
 # Optional (for integration tests)
 export RUN_INTEGRATION_TESTS=true
@@ -168,7 +168,7 @@ For automated testing, you can add integration tests to your CI/CD pipeline:
 - name: Run Integration Tests
   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
   env:
-    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    LANGOUSTINE_MCP_OPENAI_API_KEY: ${{ secrets.LANGOUSTINE_MCP_OPENAI_API_KEY }}
     RUN_INTEGRATION_TESTS: true
   run: npm run test:integration
 ```

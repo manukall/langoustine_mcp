@@ -21,7 +21,7 @@ describe("OpenAIEmbeddingClient", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Reset environment variables
-    delete process.env.OPENAI_API_KEY;
+    delete process.env.LANGOUSTINE_MCP_OPENAI_API_KEY;
     delete process.env.OPENAI_EMBEDDING_MODEL;
     delete process.env.EMBEDDING_MAX_RETRIES;
     delete process.env.EMBEDDING_RETRY_DELAY;

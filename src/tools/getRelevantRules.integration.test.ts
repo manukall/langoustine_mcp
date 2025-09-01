@@ -21,9 +21,9 @@ testFn("getRelevantRules End-to-End Integration Tests", () => {
 
   beforeAll(() => {
     // Verify we have the required environment variables
-    if (!process.env.TESTING_OPENAI_API_KEY) {
+    if (!process.env.LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY) {
       throw new Error(
-        "TESTING_OPENAI_API_KEY environment variable is required for integration tests",
+        "LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY environment variable is required for integration tests",
       );
     }
 
@@ -35,7 +35,7 @@ testFn("getRelevantRules End-to-End Integration Tests", () => {
       embeddingRetryDelay: 1000,
       llmMaxRetries: 2,
       llmRetryDelay: 1000,
-      openaiApiKey: process.env.TESTING_OPENAI_API_KEY,
+      openaiApiKey: process.env.LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY,
     });
     db = initializeDatabase(testConfig);
 

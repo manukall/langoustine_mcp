@@ -155,8 +155,8 @@ function parseEnvironmentVariables(): Partial<Config> {
     config.databasePath = process.env.LANGOUSTINE_DB_PATH;
   }
 
-  if (process.env.OPENAI_API_KEY) {
-    config.openaiApiKey = process.env.OPENAI_API_KEY;
+  if (process.env.LANGOUSTINE_MCP_OPENAI_API_KEY) {
+    config.openaiApiKey = process.env.LANGOUSTINE_MCP_OPENAI_API_KEY;
   }
 
   if (process.env.LLM_MODEL) {
@@ -273,7 +273,7 @@ Options:
 
 Environment Variables:
   LANGOUSTINE_DB_PATH             Database file path (overridden by --db argument)
-  OPENAI_API_KEY                  OpenAI API key (overridden by --openai-api-key)
+  LANGOUSTINE_MCP_OPENAI_API_KEY                  OpenAI API key (overridden by --openai-api-key)
   LLM_MODEL                       LLM model (overridden by --llm-model)
   LLM_MAX_RETRIES                 LLM max retries (overridden by --llm-max-retries)
   LLM_RETRY_DELAY                 LLM retry delay (overridden by --llm-retry-delay)

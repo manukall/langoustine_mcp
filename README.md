@@ -72,7 +72,7 @@ Langoustine provides two main tools for AI assistants:
 
 4. **Set up your OpenAI API key**:
    ```bash
-   export OPENAI_API_KEY=your-api-key-here
+   export LANGOUSTINE_MCP_OPENAI_API_KEY=your-api-key-here
    ```
 
 ## Usage
@@ -108,7 +108,7 @@ node build/index.js --llm-max-retries 5 --embedding-max-retries 3
 export LANGOUSTINE_DB_PATH="/path/to/database.db"
 
 # OpenAI configuration
-export OPENAI_API_KEY="your-api-key"
+export LANGOUSTINE_MCP_OPENAI_API_KEY="your-api-key"
 export LLM_MODEL="gpt-4"
 export OPENAI_EMBEDDING_MODEL="text-embedding-3-small"
 
@@ -119,14 +119,14 @@ export EMBEDDING_MAX_RETRIES=3
 
 #### Available Options
 
-| Option                    | Environment Variable     | Default                         | Description                      |
-| ------------------------- | ------------------------ | ------------------------------- | -------------------------------- |
-| `--db, --database`        | `LANGOUSTINE_DB_PATH`    | `./.langoustine/langoustine.db` | Database file path               |
-| `--openai-api-key`        | `OPENAI_API_KEY`         | -                               | OpenAI API key (required)        |
-| `--llm-model`             | `LLM_MODEL`              | `gpt-5-mini-2025-08-07`         | LLM model for rule generation    |
-| `--embedding-model`       | `OPENAI_EMBEDDING_MODEL` | `text-embedding-3-small`        | Embedding model for similarity   |
-| `--llm-max-retries`       | `LLM_MAX_RETRIES`        | `3`                             | Maximum LLM retry attempts       |
-| `--embedding-max-retries` | `EMBEDDING_MAX_RETRIES`  | `3`                             | Maximum embedding retry attempts |
+| Option                    | Environment Variable             | Default                         | Description                      |
+| ------------------------- | -------------------------------- | ------------------------------- | -------------------------------- |
+| `--db, --database`        | `LANGOUSTINE_DB_PATH`            | `./.langoustine/langoustine.db` | Database file path               |
+| `--openai-api-key`        | `LANGOUSTINE_MCP_OPENAI_API_KEY` | -                               | OpenAI API key (required)        |
+| `--llm-model`             | `LLM_MODEL`                      | `gpt-5-mini-2025-08-07`         | LLM model for rule generation    |
+| `--embedding-model`       | `OPENAI_EMBEDDING_MODEL`         | `text-embedding-3-small`        | Embedding model for similarity   |
+| `--llm-max-retries`       | `LLM_MAX_RETRIES`                | `3`                             | Maximum LLM retry attempts       |
+| `--embedding-max-retries` | `EMBEDDING_MAX_RETRIES`          | `3`                             | Maximum embedding retry attempts |
 
 ### Integration with Cursor
 
@@ -143,7 +143,7 @@ Here is an example configuration:
         "/path/to/your/project/.langoustine.db"
       ],
       "env": {
-        "OPENAI_API_KEY": "your-api-key"
+        "LANGOUSTINE_MCP_OPENAI_API_KEY": "your-api-key"
       }
     },
     ...
@@ -182,7 +182,7 @@ npm run tsx
 # Run unit tests
 npm test
 
-# Run integration tests (requires OPENAI_API_KEY)
+# Run integration tests (requires LANGOUSTINE_MCP_OPENAI_API_KEY)
 npm run test:integration
 
 # Run all tests

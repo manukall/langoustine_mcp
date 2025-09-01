@@ -13,9 +13,9 @@ testFn("OpenAIEmbeddingClient Integration Tests", () => {
 
   beforeAll(() => {
     // Verify we have the required environment variables
-    if (!process.env.TESTING_OPENAI_API_KEY) {
+    if (!process.env.LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY) {
       throw new Error(
-        "TESTING_OPENAI_API_KEY environment variable is required for integration tests",
+        "LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY environment variable is required for integration tests",
       );
     }
 
@@ -23,7 +23,7 @@ testFn("OpenAIEmbeddingClient Integration Tests", () => {
       embeddingModel: "text-embedding-3-small",
       embeddingMaxRetries: 2,
       embeddingRetryDelay: 1000,
-      openaiApiKey: process.env.TESTING_OPENAI_API_KEY,
+      openaiApiKey: process.env.LANGOUSTINE_MCP_TESTING_OPENAI_API_KEY,
     });
 
     embeddingClient = new OpenAIEmbeddingClient(testConfig);

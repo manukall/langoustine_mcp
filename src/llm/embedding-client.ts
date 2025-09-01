@@ -30,7 +30,7 @@ export interface EmbeddingResult {
  * Configuration options for embedding clients.
  */
 export interface EmbeddingConfig {
-  /** OpenAI API key (defaults to OPENAI_API_KEY environment variable) */
+  /** OpenAI API key (defaults to LANGOUSTINE_MCP_OPENAI_API_KEY environment variable) */
   apiKey?: string;
   /** Embedding model to use (defaults to OPENAI_EMBEDDING_MODEL or "text-embedding-3-small") */
   model?: string;

@@ -21,7 +21,7 @@ describe("OpenAIClient", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    process.env.OPENAI_API_KEY = "test-api-key";
+    process.env.LANGOUSTINE_MCP_OPENAI_API_KEY = "test-api-key";
     client = new OpenAIClient(
       createTestConfig({ openaiApiKey: "test-api-key" }),
     );
