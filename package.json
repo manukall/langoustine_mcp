@@ -1,7 +1,21 @@
 {
+  "name": "langoustine-mcp",
+  "version": "1.0.0",
+  "description": "Langoustine MCP Server for developer instruction management",
   "type": "module",
+  "bin": {
+    "langoustine-mcp": "./build/index.js"
+  },
+  "main": "./build/index.js",
+  "files": [
+    "build/**/*"
+  ],
+  "keywords": ["mcp", "model-context-protocol", "ai", "developer-tools"],
+  "author": "Manuel",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "postbuild": "chmod +x build/index.js",
     "start": "node build/index.js",
     "dev": "tsc && node build/index.js",
     "tsx": "tsx src/index.ts",

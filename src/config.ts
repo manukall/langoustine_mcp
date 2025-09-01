@@ -255,7 +255,7 @@ export function displayHelp(): void {
   console.log(`
 Langoustine MCP Server
 
-Usage: node build/index.js [options]
+Usage: npx langoustine-mcp [options]
 
 Options:
   --db, --database <path>          Specify the database file path
@@ -282,8 +282,8 @@ Environment Variables:
   EMBEDDING_RETRY_DELAY           Embedding retry delay (overridden by --embedding-retry-delay)
 
 Examples:
-  node build/index.js --db /path/to/my/database.db
-  node build/index.js --openai-api-key sk-xxx --llm-model gpt-4
-  node build/index.js --embedding-model text-embedding-ada-002 --embedding-max-retries 5
+  npx langoustine-mcp --db /path/to/my/database.db
+  npx langoustine-mcp --openai-api-key sk-xxx --llm-model gpt-4
+  npx langoustine-mcp --embedding-model text-embedding-ada-002 --embedding-max-retries 5
 `);
 }
