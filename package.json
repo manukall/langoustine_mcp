@@ -4,7 +4,7 @@
   "description": "Langoustine MCP Server for developer instruction management",
   "type": "module",
   "bin": {
-    "langoustine-mcp": "./build/index.js"
+    "langoustine-mcp": "build/index.js"
   },
   "main": "./build/index.js",
   "files": [
