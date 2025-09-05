@@ -45,13 +45,15 @@ export class MockLLMClient implements LLMClient {
       return response.result;
     }
 
-    // Default fallback response
+    // Default fallback response: consider most generic instructions generalizable
     return {
       success: true,
       rule: {
         rule_text: instruction,
         category: "best-practices",
       },
+      reason: null,
+      error: null,
     };
   }
 

@@ -24,7 +24,7 @@
     "start": "node build/index.js",
     "dev": "tsc && node build/index.js",
     "tsx": "tsx src/index.ts",
-    "test": "vitest run",
+    "test": "vitest run src/**/*.test.ts",
     "test:integration": "RUN_INTEGRATION_TESTS=true vitest run src/**/*.integration.test.ts",
     "test:all": "npm run test && npm run test:integration",
     "lint": "eslint .",
