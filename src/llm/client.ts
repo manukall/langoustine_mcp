@@ -7,11 +7,14 @@ export interface LLMClient {
 
 export interface RuleGenerationResult {
   success: boolean;
-  rule?: {
+  // If generalizable, returns the abstract rule and category.
+  // If not generalizable, returns null and a reason.
+  rule: {
     rule_text: string;
     category: string;
-  };
-  error?: string;
+  } | null;
+  reason: string | null; // present when rule is null, explains non-generalizability
+  error: string | null; // present when success is false (API/parse failure)
 }
 
 export interface LLMConfig {

@@ -39,6 +39,8 @@ describe("rememberDeveloperInstruction tool", () => {
         rule_text: "Use TypeScript for new files",
         category: "style",
       },
+      reason: null,
+      error: null,
     });
 
     const result = await rememberDeveloperInstructionHandler(
@@ -104,6 +106,8 @@ describe("rememberDeveloperInstruction tool", () => {
         rule_text: "Test rule",
         category: "testing",
       },
+      reason: null,
+      error: null,
     });
 
     const result = await rememberDeveloperInstructionHandler(
@@ -128,6 +132,8 @@ describe("rememberDeveloperInstruction tool", () => {
         rule_text: "Use TypeScript",
         category: "style",
       },
+      reason: null,
+      error: null,
     });
 
     const result1 = await rememberDeveloperInstructionHandler(
@@ -143,6 +149,8 @@ describe("rememberDeveloperInstruction tool", () => {
         rule_text: "Write tests",
         category: "testing",
       },
+      reason: null,
+      error: null,
     });
 
     const result2 = await rememberDeveloperInstructionHandler(
@@ -186,6 +194,8 @@ describe("rememberDeveloperInstruction tool", () => {
     // Mock LLM failure
     mockLLMClient.setDefaultResponse({
       success: false,
+      rule: null,
+      reason: null,
       error: "LLM service unavailable",
     });
 
@@ -213,6 +223,8 @@ describe("rememberDeveloperInstruction tool", () => {
         rule_text: "Test rule",
         category: "testing",
       },
+      reason: null,
+      error: null,
     });
 
     // Mock embedding failure
@@ -228,5 +240,37 @@ describe("rememberDeveloperInstruction tool", () => {
     expect(result.content[0].text).toContain(
       "Failed to create rule with embedding",
     );
+  });
+
+  it("should skip DB writes when instruction is not generalizable", async () => {
+    const instruction = "Move the button 3 px right";
+    const context = "UI tweak";
+
+    // Mock LLM non-generalizable response
+    mockLLMClient.setDefaultResponse({
+      success: true,
+      rule: null,
+      reason: "Too specific: pixel-level adjustment",
+      error: null,
+    });
+
+    const result = await rememberDeveloperInstructionHandler(
+      { instruction, context },
+      db,
+      mockLLMClient,
+      mockEmbeddingClient,
+    );
+
+    expect(result.content[0].text).toContain("No rule generated.");
+
+    // Verify no instruction stored
+    const storedInstruction = db
+      .prepare("SELECT id FROM user_instructions WHERE instruction = ?")
+      .get(instruction);
+    expect(storedInstruction).toBeUndefined();
+
+    // Verify no rules stored
+    const rules = db.prepare("SELECT id FROM rules").all();
+    expect(rules.length).toBe(0);
   });
 });

@@ -23,19 +23,35 @@ export async function rememberDeveloperInstructionHandler(
   embeddingClient: EmbeddingClient,
 ): Promise<{ content: { type: "text"; text: string }[] }> {
   try {
-    // Step 1: Use LLM to generate abstract rule
+    // Step 1: Use LLM to determine generalizability and possibly generate an abstract rule
     const ruleGenerationResult = await llmClient.generateRule(
       instruction,
       context,
     );
 
-    if (!ruleGenerationResult.success || !ruleGenerationResult.rule) {
+    // LLM error case: short-circuit with error message
+    if (!ruleGenerationResult.success) {
       console.error("Failed to generate rule:", ruleGenerationResult.error);
       return {
         content: [
           {
             type: "text",
             text: `Failed to generate abstract rule: ${ruleGenerationResult.error}`,
+          },
+        ],
+      };
+    }
+
+    // No rule generated case: rule is null, include reason and do not write to DB
+    if (ruleGenerationResult.rule === null) {
+      const reasonText = ruleGenerationResult.reason
+        ? ` Reason: ${ruleGenerationResult.reason}`
+        : "";
+      return {
+        content: [
+          {
+            type: "text",
+            text: `No rule generated.${reasonText}`,
           },
         ],
       };

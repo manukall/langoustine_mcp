@@ -2,14 +2,14 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { OpenAIClient } from "./openai-client.js";
 import { createTestConfig } from "../test-utils.js";
 
-// Mock OpenAI
-const mockCreate = vi.fn();
-vi.mock("openai", () => {
+// Mock OpenAI SDK
+const mockParse = vi.fn();
+vi.mock("openai/index", () => {
   return {
     default: vi.fn().mockImplementation(() => ({
       chat: {
         completions: {
-          create: mockCreate,
+          parse: mockParse,
         },
       },
     })),
@@ -33,14 +33,19 @@ describe("OpenAIClient", () => {
         choices: [
           {
             message: {
-              content:
-                '{\n  "rule_text": "Don\'t mock internal modules",\n  "category": "testing"\n}',
+              parsed: {
+                rule: {
+                  rule_text: "Don't mock internal modules",
+                  category: "testing",
+                },
+                reason: null,
+              },
             },
           },
         ],
       };
 
-      mockCreate.mockResolvedValue(mockResponse);
+      mockParse.mockResolvedValue(mockResponse);
 
       const result = await client.generateRule(
         "You have mocked the CalculateSumService, which is an internal module. Don't do that.",
@@ -52,68 +57,40 @@ describe("OpenAIClient", () => {
         rule_text: "Don't mock internal modules",
         category: "testing",
       });
-      expect(mockCreate).toHaveBeenCalledWith({
+
+      const call = mockParse.mock.calls[0][0];
+      expect(call).toMatchObject({
         model: "gpt-5-mini-2025-08-07",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a coding assistant that extracts abstract rules from developer instructions.",
-          },
-          {
-            role: "user",
-            content: expect.stringContaining(
-              "Task: Convert the following user instruction",
-            ),
-          },
-        ],
       });
+      expect(call.messages[0]).toMatchObject({ role: "system" });
+      expect(call.messages[1]).toMatchObject({ role: "user" });
+      expect(call.response_format).toBeDefined();
     });
 
-    it("should handle invalid JSON response", async () => {
+    it("should return reason when rule is null", async () => {
       const mockResponse = {
         choices: [
           {
             message: {
-              content: "Invalid JSON response",
+              parsed: {
+                rule: null,
+                reason: "Too specific: pixel tweak",
+              },
             },
           },
         ],
       };
 
-      mockCreate.mockResolvedValue(mockResponse);
+      mockParse.mockResolvedValue(mockResponse);
 
       const result = await client.generateRule(
-        "test instruction",
-        "test context",
+        "Move the button 3 px right",
+        "UI fine-tuning",
       );
 
-      expect(result.success).toBe(false);
-      expect(result.error).toContain("Failed to parse LLM response");
-    });
-
-    it("should handle missing rule_text or category", async () => {
-      const mockResponse = {
-        choices: [
-          {
-            message: {
-              content: '{\n  "rule_text": "test rule"\n}',
-            },
-          },
-        ],
-      };
-
-      mockCreate.mockResolvedValue(mockResponse);
-
-      const result = await client.generateRule(
-        "test instruction",
-        "test context",
-      );
-
-      expect(result.success).toBe(false);
-      expect(result.error).toContain(
-        "Invalid response format: missing rule_text or category",
-      );
+      expect(result.success).toBe(true);
+      expect(result.rule).toBeNull();
+      expect(result.reason).toBe("Too specific: pixel tweak");
     });
   });
 
@@ -123,19 +100,29 @@ describe("OpenAIClient", () => {
         choices: [
           {
             message: {
-              content: '{\n  "rule_text": "test",\n  "category": "testing"\n}',
+              parsed: {
+                rule: {
+                  rule_text: "test",
+                  category: "testing",
+                },
+                reason: null,
+              },
             },
           },
         ],
       };
 
-      mockCreate.mockResolvedValue(mockResponse);
+      mockParse.mockResolvedValue(mockResponse);
 
       await client.generateRule("test instruction", "test context");
 
-      const call = mockCreate.mock.calls[0][0];
+      const call = mockParse.mock.calls[0][0];
       expect(call.messages[1].content).toContain("test instruction");
       expect(call.messages[1].content).toContain("test context");
+      expect(call.messages[1].content).toContain(
+        "Determine if the instruction is generalizable",
+      );
+      expect(call.response_format).toBeDefined();
     });
   });
 });
